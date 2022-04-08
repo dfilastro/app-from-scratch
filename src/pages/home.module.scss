@@ -1,1 +1,46 @@
-// TODO
+.container {
+  button {
+    border: none;
+    background: transparent;
+    color: var(--highlight);
+    font-size: 1.125rem;
+    margin-top: 4rem;
+    cursor: pointer;
+
+    transition: color 0.3s;
+
+    &:hover {
+      color: var(--body);
+    }
+  }
+
+  .postContainer {
+    & + .postContainer {
+      margin-top: 3rem;
+    }
+
+    .postAbstract {
+      font-size: 1.125rem;
+    }
+
+    .postTitle {
+      font-size: 1.75rem; //28px
+      margin-bottom: 0.5rem;
+    }
+
+    .postData {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.875rem;
+      margin-top: 1.5rem;
+
+      div {
+        display: flex;
+      }
+
+      p {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}
