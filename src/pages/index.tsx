@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Header from '../components/Header';
-import * as prismic from '@prismicio/client';
+import * as Prismic from '@prismicio/client';
 
 import { FiCalendar, FiUser } from 'react-icons/fi';
 
@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useState } from 'react';
+import { getPrismicClient } from '../services/prismic';
 
 interface Post {
   uid?: string;
@@ -123,7 +124,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const client = prismic.createClient(process.env.PRISMIC_API_EDNPOINT);
+  const client = getPrismicClient();
 
   const response = await client.getByType('posts', {
     pageSize: 1,
