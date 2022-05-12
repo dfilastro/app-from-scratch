@@ -16,12 +16,15 @@
   }
 
   .postContainer {
+    cursor: pointer;
+
     & + .postContainer {
       margin-top: 3rem;
     }
 
     .postAbstract {
       font-size: 1.125rem;
+      line-height: 1.5rem;
     }
 
     .postTitle {
