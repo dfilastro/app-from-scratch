@@ -20,7 +20,7 @@ interface Post {
     };
     author: string;
     content: {
-      heading: { text: string };
+      heading: string;
       body: {
         text: string;
       }[];
@@ -33,10 +33,11 @@ interface PostProps {
 }
 
 export default function Post({ post }: PostProps): JSX.Element {
-  const total = post.data.content.reduce((acc, content) => {
-    acc += content.heading[0].text.split(' ').length;
+  console.log(post);
+  const total = post.data.content.reduce((acc, current) => {
+    acc += current.heading.split(' ').length;
 
-    const numWords = content.body.map(i => i.text.split(' ').length);
+    const numWords = current.body.map(i => i.text.split(' ').length);
     numWords.map(w => (acc += w));
 
     return acc;
@@ -86,8 +87,8 @@ export default function Post({ post }: PostProps): JSX.Element {
 
           {post.data.content.map(content => {
             return (
-              <article key={content.heading[0].text}>
-                <h2>{content.heading[0].text}</h2>
+              <article key={content.heading + ''}>
+                <h2>{content.heading}</h2>
                 <div
                   className={styles.postContainer}
                   dangerouslySetInnerHTML={{
@@ -131,11 +132,12 @@ export const getStaticProps: GetStaticProps = async context => {
     uid: response.uid,
     first_publication_date: response.first_publication_date,
     data: {
-      title: response.data.title[0].text,
+      title: response.data.title,
+      subtitle: response.data.subtitle,
       banner: {
         url: response.data.banner.url,
       },
-      author: response.data.author[0].text,
+      author: response.data.author,
       content: response.data.content.map(content => {
         return {
           heading: content.heading,

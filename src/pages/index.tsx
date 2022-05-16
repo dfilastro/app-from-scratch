@@ -73,9 +73,9 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
           }
         ),
 
-        title: post.data.title[0].text,
-        subtitle: post.data.subtitle[0].text,
-        author: post.data.author[0].text,
+        title: post.data.title,
+        subtitle: post.data.subtitle,
+        author: post.data.author,
       };
     });
 
@@ -134,9 +134,9 @@ export const getStaticProps: GetStaticProps = async () => {
       uid: post.uid,
       first_publication_date: post.first_publication_date,
       data: {
-        title: post.data.title[0].text,
-        subtitle: post.data.subtitle[0].text,
-        author: post.data.author[0].text,
+        title: post.data.title,
+        subtitle: post.data.subtitle,
+        author: post.data.author,
       },
     };
   });
