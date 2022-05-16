@@ -1,13 +1,12 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
 import Header from '../../components/Header';
-import * as prismic from '@prismicio/client';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
-import { endpoint } from '../../services/prismic';
+import { getPrismicClient } from '../../services/prismic';
 import { RichText } from 'prismic-dom';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -46,7 +45,9 @@ export default function Post({ post }: PostProps): JSX.Element {
   const readingTime = Math.ceil(total / 200);
 
   const router = useRouter();
-  if (router.isFallback) return <h1>Carregando...</h1>;
+  if (router.isFallback) {
+    return <h1>Carregando...</h1>;
+  }
 
   const formatedDate = format(
     new Date(post.first_publication_date),
@@ -103,10 +104,10 @@ export default function Post({ post }: PostProps): JSX.Element {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const client = prismic.createClient(endpoint);
-  const posts = await client.getAllByType('posts');
+  const client = getPrismicClient({});
+  const posts = await client.getByType('posts');
 
-  const paths = posts.map(post => {
+  const paths = posts.results.map(post => {
     return {
       params: {
         slug: post.uid,
@@ -121,7 +122,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async context => {
-  const client = prismic.createClient(endpoint);
+  const client = getPrismicClient({});
   const { slug } = context.params;
 
   const response = await client.getByUID('posts', String(slug), {});

@@ -1,7 +1,6 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Header from '../components/Header';
-import * as Prismic from '@prismicio/client';
 
 import { FiCalendar, FiUser } from 'react-icons/fi';
 
@@ -124,7 +123,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const client = getPrismicClient();
+  const client = getPrismicClient({});
 
   const response = await client.getByType('posts', {
     pageSize: 1,
